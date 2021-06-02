@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jimin.spring.user.UserMapper">
+    <insert id="insUser"> /* 메소드 이름 */
+    /* insert할 sql문 */
+INSERT INTO t_user
+(uid,upw,unm,gender)
+VALUES
+(#{uid},#{upw},#{unm},#{gender}) /* 얘네는 UserEntity 객체의 멤버필드명 */
+/* #: 문자열로 보내면 알아서 홑따옴표, 정수형하면 홑따옴표 떼고 (연산가능) */
+/* $: 홑따옴표 안붙임 */
+    </insert>
+</mapper>
