@@ -5,6 +5,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
+//@Alias 사용가능
 public class UserEntity {
     private int iuser;
     private String uid;
@@ -12,6 +13,5 @@ public class UserEntity {
     private String unm;
     private int gender;
     private String regdt;
-    private String profileImg;
 
 }

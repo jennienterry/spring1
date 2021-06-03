@@ -8,7 +8,7 @@
 <form id="frm" action="join" method="post">
     <div>
         <input type="text" name="uid" placeholder="아이디">
-        <input type="button" name="btnChkId" placeholder="중복ID체크">
+        <input type="button" name="btnChkId" value="중복ID체크">
     </div>
     <div id="chkUidResult"></div>
     <div><input type="password" name="upw" placeholder="비밀번호"></div>

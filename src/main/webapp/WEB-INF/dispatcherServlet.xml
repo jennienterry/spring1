@@ -18,10 +18,14 @@
     <!-- annotation으로 bean 등록할 class들을 스캔뜨는 시작 패키지를 설정 -->
     <context:component-scan base-package="com.jimin.spring"/>
 
+    <mvc:resources mapping="/res/**" location="/res/"/>
+    <!-- res/** 아래로 몇차 주소든 모든 값을 다 불러들일 수 있다는 의미
+         주소창에 mapping으로 들어가고, 파일 여는 것은 location -->
+
     <!-- 사용할 파일명을 완성해주는 객체 -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/views/"/>
-        <property name="suffix" value=".jsp"/>
+        <property name="prefix" value="/WEB-INF/views/"/> <!-- prefix : 앞에 붙이는 -->
+        <property name="suffix" value=".jsp"/> <!-- suffix : 뒤에 붙이는 -->
     </bean>
 
 </beans>

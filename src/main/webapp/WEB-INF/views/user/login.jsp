@@ -12,5 +12,17 @@
 </head>
 <body>
     <div>로그인</div>
+    <div>${requestScope.errMsg}</div>
+    <form action="login" method="post">
+        <div><input type="text" name="uid" placeholder="id"></div>
+        <div><input type="password" name="upw" placeholder="password"></div>
+        <div>
+            <input type="submit" value="Login">
+        </div>
+    </form>
+
+    <div>
+        <a href="join"><button>join</button></a>
+    </div>
 </body>
 </html>
