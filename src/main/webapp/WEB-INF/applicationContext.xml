@@ -11,6 +11,7 @@
         http://mybatis.org/schema/mybatis-spring.xsd">
 
     <context:property-placeholder location="classpath:application.properties"/>
+
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
         <property name="driverClassName" value="${db.driver}"/>
         <property name="jdbcUrl" value="${db.host}"/>

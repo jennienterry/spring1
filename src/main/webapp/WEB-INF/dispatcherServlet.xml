@@ -28,4 +28,6 @@
         <property name="suffix" value=".jsp"/> <!-- suffix : 뒤에 붙이는 -->
     </bean>
 
+    <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+
 </beans>
