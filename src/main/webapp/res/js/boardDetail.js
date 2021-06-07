@@ -5,7 +5,7 @@ var cmtListElem = document.querySelector('#cmtList');
 var cmtModModalElem = document.querySelector('#modal');
 
 function regCmt(){
-	var cmtVal = cmtFrmElem.cmt.value;	//. = 속성명으로 접근(id나 name)
+	var cmtVal = cmtFrmElem.cmt.value;	//. = 속성명으로 접근(속성명이 없을 경우 자식 요소의 id나 name)
 
 	var param = {
 		iboard: cmtListElem.dataset.iboard, // data-iboard 속성의 값
@@ -15,16 +15,21 @@ function regCmt(){
 }
 //서버에게 등록해줘~!
 function regAjax(param){
-	const init = {
+	const init = { //javascript객체
 		method: 'POST',
-		body: new URLSearchParams(param) //URLSearchParams : 서블릿에서 파라미터로 받을 수 있도록 해주는 것
+		body: JSON.stringify(param),
+		//new URLSearchParams(param) : (java에서는) 서블릿에서 get파라미터로 받을 수 있도록 해주는 것
+		headers:{
+			'accept' : 'application/json', //json으로 날린다고 알려줘야함
+			'content-type' : 'application/json;charset=UTF-8'
+		}
 	};
-		// cmtInsSel : 서블렛주소
-	fetch('cmtInsSel', init)
-	.then(function(res){
-		return res.json();
+			// cmtIns : 서블렛주소
+	fetch('cmtIns', init)
+	.then(function(res){ //서버에서 나한테 응답으로 준 값 (return한것이 res로 감)
+		return res.json(); //여기까지 아직 문자열인데 json을 통해서 객체로 넘어옴
 	})
-	.then(function(myJson){ //서버에서 나한테 응답으로 준 값 ???????
+	.then(function(myJson){ //여기가 객체가 됨
 		console.log(myJson);
 		
 		switch(myJson.result){
@@ -43,22 +48,30 @@ function regAjax(param){
 function getListAjax(){
 	var iboard = cmtListElem.dataset.iboard;
 	
-	fetch('cmtInsSel?iboard=' + iboard) //설정값이 없으므로 get방식 (a태그 생각하기! 쿼리스트링)
-	.then(function(res){
+	fetch('cmtSel?iboard=' + iboard) // 설정값이 없으므로 get 방식 (a태그 생각하기! 쿼리스트링)
+		// controller에서 실행 (= response.sendRedirect)
+		// promise 동기 <-> 서버한테 통신 날리는 fetch
+		// 통신은 무조건 비동기로 처리 why? 통신하는게 컴퓨터 입장에서는 느림
+		// 기다렸다가 화면 만들면 느리니까 비동기처리 하는 것 / 통신된다면! then이 응답 하는 순서 
+	.then(function(res){ // then 쓰면 비동기 / fetch와 then이 관계는 동기
 		return res.json();
 	})
 	.then(function(myJson){
 		console.log(myJson);
 		
-		makeCmtElemList(myJson);
+		makeCmtElemList(myJson); //함수호출
 	});
-	
 }
+// 동기 : 1하는일이 끝나기 전에 2를 실행하지 않음
+// 비동기 : 걍 실행
 
-function makeCmtElemList(data){
-	
+function makeCmtElemList(data){ //함수정의
 	cmtListElem.innerHTML = '';
-	// =innerText/ 내용 비우기, 댓글 새로달면 테이블이 또 생기기때문에 비우고 새 댓글만 존재하도록
+	//cmtListElem.innerText = ''; &lt와 $gt로 바꿔주기 때문에 태그가 그대로 찍힌다
+	//cmtListElem.append(); <-> 앞에 붙일 때는 prepend / (문자열) 입력
+	//cmtListElem.appendChild(); (로드[element]객체 주소값)을 넣어야 한다.
+	// =은 교체를 의미한다. / append는 메소드로 교체가 아닌 추가하는 개념임
+	// = innerText/ 내용 비우기, 댓글 새로달면 테이블이 또 생기기때문에 비우고 새 댓글만 존재하도록
 	
 	var tableElem = document.createElement('table');
 	var trElemTitle = document.createElement('tr');
@@ -82,7 +95,7 @@ function makeCmtElemList(data){
 	
 	var loginUserPk = cmtListElem.dataset.login_user_pk;
 	
-	data.forEach(function(item){
+	data.forEach(function(item){ //여기부터 forEach문 시작
 		var trElemCtnt = document.createElement('tr');
 		var tdElem1 = document.createElement('td');
 		var tdElem2 = document.createElement('td');
@@ -122,8 +135,7 @@ function makeCmtElemList(data){
 		trElemCtnt.append(tdElem4);
 		
 		tableElem.append(trElemCtnt);
-	});
-	
+	}); //여기까지 forEach문(비동기) 돌림 (가지고 있는 item수만큼)
 	}
 
 function delAjax(icmt){
@@ -183,4 +195,4 @@ function closeModModal(){
 	cmtModModalElem.className = 'displayNone';
 }
 
-//getListAjax(); //이 파일이 임포트되면 함수 1회 호출
+getListAjax(); //이 파일이 임포트되면 함수 1회 호출

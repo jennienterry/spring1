@@ -26,8 +26,10 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="typeAliasesPackage" value="com.jimin.spring"/>
+        <!-- 이걸 사용하면 AS줄 필요없이 클래스명으로 사용가능 -->
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
     </bean>
 
     <mybatis-spring:scan base-package="com.jimin.spring"/>
+    <!-- mapper라고 적힌 애들을 scan해준다. -->
 </beans>

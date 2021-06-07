@@ -43,7 +43,8 @@ public class UserController { // 얘는 1차 주소값
     @RequestMapping(value="/login", method= RequestMethod.POST)
     public String login(UserEntity param){
         return "redirect:" + service.login(param);
-        //redirect: 안해주면 UserMapper.java에서 각자 다 붙여줘야함
+        //redirect: 안해주면 UserMapper.java에서 각자 다 붙여줘야함 (jsp파일을 열어주는애)
+        //redirect: 하면 Controller를 호출
     }
 
     @RequestMapping("/join")

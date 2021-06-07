@@ -6,9 +6,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!-- 이건 자바에서 입력하는 언어-->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
+<meta charset="UTF-8"> <!-- 이건 web(브라우저)에서 읽을 때의 언어이기 때문에 꼭 설정해줘야한다. -->
 <link rel="stylesheet" href="/res/css/boardDetail.css">
 <script defer src="/res/js/boardDetail.js"></script>
     <title>${requestScope.vo.title}</title>
@@ -31,24 +33,12 @@
 <c:if test="${not empty sessionScope.loginUser}">
   <div>			   <!-- onsubmit="return false" : submit눌렀을 때 서블렛으로 안가도록 /Ajax실행해야하기 때문에(String만 가져와야해서) -->
     <form id="cmtFrm" onsubmit="return false;">
-      <input type="text" id="cmt" placeholder="댓글">
+      <input type="text" id="cmt" placeholder="댓글"> <!-- input의 value값은 text안에 친 값 -->
       <input type="button" value="댓글달기" onclick="regCmt();">
     </form>
   </div>
-</c:if>  	<!-- data-를 set할 때는 대문자 x : div속성에 값을 넣어두는 것 / map 헤즈윅? -->
+</c:if>  	<!-- data-를 set할 때는 대문자 x : div속성에 값을 넣어두는 것 -->
 <div id="cmtList" data-login_user_pk="${sessionScope.loginUser.iuser}" data-iboard="${param.iboard}"></div>
       <!-- data-login_user_pk로 넣으면 js에서 loginUserPk로 받으면 된다. -->
-
-<div id="modal" class="displayNone">
-  <div class="modal_content">
-    <form id="cmtModFrm" action="#">
-      <input type="hidden" id="icmt">
-      <input type="text" id="cmt">
-    </form>
-    <input type="button" value="댓글 수정" onclick="modAjax();">
-    <input type="button" value="취소" onclick="closeModModal();">
-
-  </div>
-</div>
 </body>
 </html>

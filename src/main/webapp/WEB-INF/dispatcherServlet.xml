@@ -20,7 +20,8 @@
 
     <mvc:resources mapping="/res/**" location="/res/"/>
     <!-- res/** 아래로 몇차 주소든 모든 값을 다 불러들일 수 있다는 의미
-         주소창에 mapping으로 들어가고, 파일 여는 것은 location -->
+         주소창에 mapping으로 들어가고, 파일 여는 것은 location
+         경로[폴더명]를 다르게 할 수는 있지만 맞추는 것이 좋음 -->
 
     <!-- 사용할 파일명을 완성해주는 객체 -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
