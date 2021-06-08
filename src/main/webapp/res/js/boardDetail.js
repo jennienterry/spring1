@@ -24,8 +24,8 @@ function regAjax(param){
 			'content-type' : 'application/json;charset=UTF-8'
 		}
 	};
-			// cmtIns : 서블렛주소
-	fetch('cmtIns', init)
+			// cmt : 서블렛주소
+	fetch('cmt', init)
 	.then(function(res){ //서버에서 나한테 응답으로 준 값 (return한것이 res로 감)
 		return res.json(); //여기까지 아직 문자열인데 json을 통해서 객체로 넘어옴
 	})
@@ -48,7 +48,7 @@ function regAjax(param){
 function getListAjax(){
 	var iboard = cmtListElem.dataset.iboard;
 	
-	fetch('cmtSel?iboard=' + iboard) // 설정값이 없으므로 get 방식 (a태그 생각하기! 쿼리스트링)
+	fetch('cmt/' + iboard) // 설정값이 없으므로 get 방식 (a태그 생각하기! 쿼리스트링)
 		// controller에서 실행 (= response.sendRedirect)
 		// promise 동기 <-> 서버한테 통신 날리는 fetch
 		// 통신은 무조건 비동기로 처리 why? 통신하는게 컴퓨터 입장에서는 느림
@@ -56,7 +56,7 @@ function getListAjax(){
 	.then(function(res){ // then 쓰면 비동기 / fetch와 then이 관계는 동기
 		return res.json();
 	})
-	.then(function(myJson){
+	.then(function(myJson){ //댓글들의 정보가 js 객체로 되어있음
 		console.log(myJson);
 		
 		makeCmtElemList(myJson); //함수호출
@@ -95,6 +95,7 @@ function makeCmtElemList(data){ //함수정의
 	
 	var loginUserPk = cmtListElem.dataset.login_user_pk;
 	
+	//data 배열이거나 컬렉션 자료형일 때 forEach 가능
 	data.forEach(function(item){ //여기부터 forEach문 시작
 		var trElemCtnt = document.createElement('tr');
 		var tdElem1 = document.createElement('td');
@@ -112,8 +113,11 @@ function makeCmtElemList(data){ //함수정의
 			
 			//삭제버튼 클릭시
 			delBtn.addEventListener('click', function(){
+				//if에는 boolean으로 true,false만 들어간다.
+				//문자열 > 빈 문자열이면 js에선 false로 인식한다.
+				//숫자 > 0만 false 나머지는 다 true
 				if(confirm('삭제하시겠습니까?')){
-					delAjax(item.icmt);}	
+					delAjax(item.icmt);}	//item : 댓글 하나하나의 정보가 들어있음
 			});
 			
 			//수정버튼 클릭시
@@ -138,15 +142,15 @@ function makeCmtElemList(data){ //함수정의
 	}); //여기까지 forEach문(비동기) 돌림 (가지고 있는 item수만큼)
 	}
 
-function delAjax(icmt){
-	fetch('cmtDelUpd?icmt=' + icmt)
+function delAjax(icmt){				//js객체
+	fetch('cmt/' + icmt, {method:'DELETE'})
 	.then(function(res){
 		return res.json();
 	})
 	.then(function(data){
 		console.log(data);
 		
-		switch(data.result){
+		switch(data){
 			case 0:
 			alert('댓글 삭제를 실패하였습니다.');
 			break;
@@ -164,18 +168,23 @@ function modAjax(){
 	var cmtModFrmElem = document.querySelector('#cmtModFrm');
 	var param = {
 		icmt : cmtModFrmElem.icmt.value,
-		cmt : cmtModFrmElem.cmt.value
+		cmt : cmtModFrmElem.modCmt.value
 }
 	const init = {
-		method: 'POST',
-		body: new URLSearchParams(param) //URLSearchParams객체가 servlet에서 getparam할수있도록 해준다.
+		method: 'PUT', //수정
+		body: JSON.stringify(param),
+			// new URLSearchParams(param) //URLSearchParams객체가 servlet에서 getparam할수있도록 해준다.
+		headers: {
+			'accept' : 'application/json', //json으로 날린다고 알려줘야함
+			'content-type' : 'application/json;charset=UTF-8'
+		}
 	};
-	fetch('cmtDelUpd', init) // servlet명, 설정값 / 설정값이 없으면 get방식이 기본
+	fetch('cmt', init) // servlet명, 설정값 / 설정값이 없으면 get방식이 기본
 	.then(function(res){
 		return res.json(); // 객체
 	})
 	.then(function(myJson){	
-		if(myJson.mod == 1){
+		if(myJson.result == 1){
 			getListAjax();
 			closeModModal();
 		}else{
@@ -188,8 +197,8 @@ function openModModal({icmt, cmt}){
 	cmtModModalElem.className = '';
 	
 	var cmtModFrmElem = document.querySelector('#cmtModFrm');
-	cmtModFrmElem.icmt.value = icmt;
-	cmtModFrmElem.cmt.value = cmt;
+	cmtModFrmElem.icmt.value = icmt; //여기서 value는 사용자가 적은 글이 값이 됨
+	cmtModFrmElem.modCmt.value = cmt;
 }
 function closeModModal(){
 	cmtModModalElem.className = 'displayNone';

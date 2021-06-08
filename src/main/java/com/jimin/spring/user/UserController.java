@@ -3,9 +3,11 @@ package com.jimin.spring.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller //컨트롤러, 서비스, 컴포넌트 등등 (빈 등록하는 애들)
 //빈 : 스프링에서 관리하는 객체
@@ -59,4 +61,16 @@ public class UserController { // 얘는 1차 주소값
     service.join(param);
     return "redirect:/user/login"; //기존에 response.sendRedirect()와 같은 역할 (서블릿을 호출)
 }
+
+    @RequestMapping("/profile")
+    public String profile(){
+        return "user/profile";
+    }
+
+//  = @RequestMapping(value="/profile", method = RequestMethod.POST)
+    @PostMapping("/profile")
+    public String profile(@RequestParam("profileImg") MultipartFile profileImg){
+        return "redirect:" + service.uploadProfile(profileImg); //변슈,파일명 name멍 다 풀ㅇ어ㅓㅓ해ㅑ함
+
+    }
     }

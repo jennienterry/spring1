@@ -27,3 +27,7 @@ section{
 
 .colorRed {color:red;}
 .displayNone {display: none !important;}
+/* display : none; 안보이면서 태그가 공간도 차지하지 않음
+ * visibility: hidden; 안보이지만 공간은 차지함
+ * important가 우선순위 제일 높음
+ */

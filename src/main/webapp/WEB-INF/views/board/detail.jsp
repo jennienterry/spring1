@@ -12,6 +12,7 @@
 <head>
 <meta charset="UTF-8"> <!-- 이건 web(브라우저)에서 읽을 때의 언어이기 때문에 꼭 설정해줘야한다. -->
 <link rel="stylesheet" href="/res/css/boardDetail.css">
+<link rel="stylesheet" href="/res/css/common.css">
 <script defer src="/res/js/boardDetail.js"></script>
     <title>${requestScope.vo.title}</title>
 </head>
@@ -40,5 +41,17 @@
 </c:if>  	<!-- data-를 set할 때는 대문자 x : div속성에 값을 넣어두는 것 -->
 <div id="cmtList" data-login_user_pk="${sessionScope.loginUser.iuser}" data-iboard="${param.iboard}"></div>
       <!-- data-login_user_pk로 넣으면 js에서 loginUserPk로 받으면 된다. -->
+<div id="modal" class="displayNone"> <!--부모가 안보이면 자식도 다 안보임 -->
+  <div class="modal_content">
+    <form id="cmtModFrm" action="#">
+      <input type="hidden" id="icmt">
+      <input type="text" id="modCmt">
+    </form>
+    <input type="button" value="댓글 수정" onclick="modAjax();">
+    <input type="button" value="취소" onclick="closeModModal();">
+
+  </div>
+</div>
+
 </body>
 </html>

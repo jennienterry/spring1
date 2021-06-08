@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-/*#modal{
+#modal{
 	position:absolute;
 	left:0;
 	top:0;
@@ -10,11 +10,11 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}*/
+}
 
-/*
+
 #modal .modal_content {
 	background:white;
 	border: 1px solid #95a5a6;
 	padding:20px;
-}*/
+}

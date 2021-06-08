@@ -19,6 +19,7 @@
     <context:component-scan base-package="com.jimin.spring"/>
 
     <mvc:resources mapping="/res/**" location="/res/"/>
+    <mvc:resources mapping="/img/**" location="file:///C:/Users/hello/springImg/"/>
     <!-- res/** 아래로 몇차 주소든 모든 값을 다 불러들일 수 있다는 의미
          주소창에 mapping으로 들어가고, 파일 여는 것은 location
          경로[폴더명]를 다르게 할 수는 있지만 맞추는 것이 좋음 -->
