@@ -6,12 +6,13 @@
     <tiles-definitions>
         <definition name="basic_template" template="/WEB-INF/views/tilesTemplate.jsp">
             <put-attribute name="header" value="/WEB-INF/views/tilesHeader.jsp"/>
+            <!-- setAttribute라고 생각하기 -->
         </definition>
+
     <!-- main/home이 아닌 home을 하려면 값 한개 받는다는 것 하나 더 만들어줘야한다. name="*" -->
     <!-- controller에서 return되는 값 기준(String) "1차주소값/2차주소값" // extends 위에꺼 상속받았다고 이해해도 됨 -->
         <definition name="*/*" extends="basic_template">
             <put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"/>
-             <!-- 뭐 어디가 put ?????????? -->
             <put-attribute name="res" value="{1}/{2}"/>
         </definition>
     </tiles-definitions>

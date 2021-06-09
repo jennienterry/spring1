@@ -13,6 +13,7 @@
     <title>${requestScope.title}</title>
     <link rel="stylesheet" href="/res/css/common.css">
     <link rel="stylesheet" href="/res/css/<tiles:getAsString name="res"/>.css">
+    <!-- 이 위치에, 이름이 "res"인 put-attribute를 String으로 가져와라 (tiles.xml확인하기) -->
     <script defer src="/res/js/common.js"></script>
     <script defer src="/res/js/<tiles:getAsString name="res"/>.js"></script>
     <!-- 해당페이지에서만 쓰는 파일을 import 할 때 쓸거 -->
@@ -20,10 +21,10 @@
 <body>
     <div id="container">
         <tiles:insertAttribute name="header"/>
+        <!-- name이 header인 attribute의 value를 여기에 넣는다. [해당하는 jsp파일을 가져와서 넣어주는 것] -->
         <section>
-            <tiles:insertAttribute name="content"/>  <!-- login.jsp가 이 위치로 들어온다. -->
+        <tiles:insertAttribute name="content"/>  <!-- ~.jsp가 이 위치로 들어온다. -->
         </section>
-
     <footer>
         @Copyright 2021.
     </footer>

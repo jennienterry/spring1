@@ -54,7 +54,7 @@ function getListAjax(){
 		// 통신은 무조건 비동기로 처리 why? 통신하는게 컴퓨터 입장에서는 느림
 		// 기다렸다가 화면 만들면 느리니까 비동기처리 하는 것 / 통신된다면! then이 응답 하는 순서 
 	.then(function(res){ // then 쓰면 비동기 / fetch와 then이 관계는 동기
-		return res.json();
+		return res.json(); // .json으로 거치면서 js에서 쓸 수 있는 언어로 바뀜
 	})
 	.then(function(myJson){ //댓글들의 정보가 js 객체로 되어있음
 		console.log(myJson);
