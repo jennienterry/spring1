@@ -5,19 +5,19 @@ html,body, ul {
 	padding:0;
 }
 
-header nav {
+header {
 	height:50px;
 	background-color:silver;
 }
 
-header nav ul {
+header ul {
 	display:flex; /* 옆으로 나열되도록 */
 	height:100%;
 	align-content:center;
 	list-style: none;
 }
 
-header nav ul li {
+header ul li {
 	margin-left:20px;
 }
 

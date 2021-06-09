@@ -11,5 +11,6 @@ public interface BoardMapper {
 //  override : 자식이 부모꺼 쓸껀데 맘에 안들어서 자기껄로 내용을 바꿔쓸 수 있다.
 // overload : 한 클래스 안에서 같은 메소드를 선언해준다. (다향성을 위해서) like 생성자
 // interface는 선언만 override를 강제로 해준다.
+    int writeMod(BoardEntity param);
 
 }

@@ -25,6 +25,16 @@ public class BoardService {
         return mapper.selBoard(param);
     }
 
+    //return 값은 iboard값
+    public int writeMod(BoardEntity param) { //BoardEntity아니면 object (= 부모타입은 자식객체 가리킬 수 있지만 자식은 부모객체x)
+        if(param.getIboard() == 0){
+            //등록
+            return 0;
+    }
+        //수정
+        return mapper.writeMod(param);
+    }
+
     public int insBoardCmt(BoardCmtEntity param) {
         UserEntity loginUser = (UserEntity) session.getAttribute("loginUser");
         param.setIuser(loginUser.getIuser());

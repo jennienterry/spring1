@@ -11,9 +11,9 @@
 <html>
 <head>
 <meta charset="UTF-8"> <!-- 이건 web(브라우저)에서 읽을 때의 언어이기 때문에 꼭 설정해줘야한다. -->
-<link rel="stylesheet" href="/res/css/boardDetail.css">
+<link rel="stylesheet" href="/res/css/board/detail.css">
 <link rel="stylesheet" href="/res/css/common.css">
-<script defer src="/res/js/boardDetail.js"></script>
+<script defer src="/res/js/board/detail.js"></script>
     <title>${requestScope.vo.title}</title>
 </head>
 <body>

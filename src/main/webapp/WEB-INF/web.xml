@@ -19,11 +19,12 @@
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <init-param>
-        <param-name>contextConfigLocation</param-name>
+        <param-name>contextConfigLocation</param-name> <!-- 멤버필드[변수] -->
         <param-value>/WEB-INF/dispatcherServlet.xml</param-value>
     </init-param>
     </servlet>
 
+    <!-- 모든 주소값을 servlet으로 연결해주는 것 ('/'가 붙은 애들만 servlet으로)-->
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/</url-pattern>

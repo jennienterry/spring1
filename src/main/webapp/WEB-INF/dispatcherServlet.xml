@@ -21,15 +21,32 @@
     <mvc:resources mapping="/res/**" location="/res/"/>
     <mvc:resources mapping="/img/**" location="file:///C:/Users/hello/springImg/"/>
     <!-- res/** 아래로 몇차 주소든 모든 값을 다 불러들일 수 있다는 의미
-         주소창에 mapping으로 들어가고, 파일 여는 것은 location
+         주소창에 mapping[연결]으로 들어가고, 파일 여는 것은 location
          경로[폴더명]를 다르게 할 수는 있지만 맞추는 것이 좋음 -->
+    <!-- /res나 /img의 경우에는 servlet이 잡지않도록 경로를 /res/와 c:/Users .. 로 지정해준 것 -->
 
-    <!-- 사용할 파일명을 완성해주는 객체 -->
+
+    <!-- 사용할 파일명을 완성해주는 객체 / open jsp 역할 -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/"/> <!-- prefix : 앞에 붙이는 -->
         <property name="suffix" value=".jsp"/> <!-- suffix : 뒤에 붙이는 -->
+        <property name="order" value="2"/> <!-- 안적어줘도 자동으로 2순위로 넣어줌, tiles 순서를 바꿔준다. -->
+    </bean>
+
+    <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+        <property name="order" value="1"/>
     </bean>
 
     <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+
+    <!-- 파일들의 설정파이릉 loading시키기위해 받는 값 -->
+    <bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+        <property name="definitions"> <!-- tilesconfigurer가 객체화될 때 definition이름을 가진애 타입이 list다. -->
+            <list> <!-- 멤버필드가 list라는 의미 -->
+                <value>/WEB-INF/tiles.xml</value>
+            </list>
+        </property>
+    </bean>
 
 </beans>

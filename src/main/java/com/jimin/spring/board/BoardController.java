@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//servlet
 @Controller //HandlerMapping이 관리, 이걸 작성해주면 밑에있는 어노테이션들이 컨트롤러의 역할을 하게 된다.
 @RequestMapping("/board")
 public class BoardController {
@@ -19,7 +20,7 @@ public class BoardController {
     // 객체화된 애의 주소 주세요
     private BoardService service;
 
-    @RequestMapping("/list")
+    @RequestMapping("/list") //RequestMapping만 있으면 jsp파일 열어주는 것
     public String list(Model model) {
         List<BoardDomain> list = service.selBoardList();
         model.addAttribute("list", list);
@@ -33,6 +34,16 @@ public class BoardController {
         model.addAttribute("vo", vo);
         return "board/detail"; //= request.getRequestDispatcher("jsp 파일 경로").forward(request, response);
     }
+
+    @RequestMapping("/writeMod")
+    public void writeMod(){}
+
+    @PostMapping("/writeMod")
+    public String writeMod(BoardEntity param){
+        int iboard = service.writeMod(param);
+        return "redirect:detail?iboard=" + iboard;
+    }
+
 
     @ResponseBody
     //이걸 달면 목적이 달라진다. jsp를 여는게 아니라 return 값을 json 으로 바꾸려고 한다. (data주는게 목적)

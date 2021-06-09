@@ -3,11 +3,11 @@ package com.jimin.spring.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller //컨트롤러, 서비스, 컴포넌트 등등 (빈 등록하는 애들)
 //빈 : 스프링에서 관리하는 객체
@@ -49,10 +49,8 @@ public class UserController { // 얘는 1차 주소값
         //redirect: 하면 Controller를 호출
     }
 
-    @RequestMapping("/join")
-    public String join(){
-        return "user/join";
-    }
+    @RequestMapping("/join") //괄호안에 들어가는 주소값[파일명,파일경로]과 return(String) 해야하는 파일명이 같으면 void로 가능
+    public void join(){ }
 
     @RequestMapping(value="/join", method=RequestMethod.POST)
     public String join(UserEntity param){
@@ -62,7 +60,14 @@ public class UserController { // 얘는 1차 주소값
     return "redirect:/user/login"; //기존에 response.sendRedirect()와 같은 역할 (서블릿을 호출)
 }
 
-    @RequestMapping("/profile")
+    @GetMapping("/logout") //로그인했던 페이지로 가려면 request 넣으면 되고 원하는 페이지로 보내고싶으면 request없이 하드코딩 하면 된다.
+    public String logout(HttpSession hs, HttpServletRequest request){
+        hs.invalidate();
+        String referer = request.getHeader("Referer");
+        return "redirect:" + referer;
+    }
+
+    @GetMapping("/profile")
     public String profile(){
         return "user/profile";
     }
