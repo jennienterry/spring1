@@ -24,7 +24,7 @@
         <li><a href="/">Home</a></li>
         <li><a href="/board/list">리스트</a></li>
         <c:if test="${not empty sessionScope.loginUser}">
-            <li><a href="/board/write">글쓰기</a></li>
+            <li><a href="/board/writeMod">글쓰기</a></li>
             <li><a href="/user/profile">프로필</a></li>
         </c:if>
     </ul>

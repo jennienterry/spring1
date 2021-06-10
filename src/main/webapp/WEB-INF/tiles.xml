@@ -14,5 +14,6 @@
         <definition name="*/*" extends="basic_template">
             <put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"/>
             <put-attribute name="res" value="{1}/{2}"/>
+            <put-attribute name="title" value="{2}"/> <!-- 창마다 title 변경 [servlet이름으로 하는 방법임] -->
         </definition>
     </tiles-definitions>

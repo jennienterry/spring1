@@ -9,20 +9,22 @@
 <!-- 이건 자바에서 입력하는 언어-->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<h1>detail</h1>
-<div><a href="#" onclick="goBack();">돌아가기</a></div>
+<h1>게시글 보기</h1>
+<div><a href="#" onclick="goBack();"><button>돌아가기</button></a></div>
 <!--  javascript:history.go(-1); 또는 .back(); -->
+<c:if test="${requestScope.vo.iuser eq sessionScope.loginUser.iuser}">
+<div>
+  <a href="writeMod?iboard=${param.iboard}"><button>수정</button></a> <!-- 글쓰기때는ㄴㄴ 수정때만 iboard 받음 -->
+  <a href="delBoard?iboard=${param.iboard}"><button>삭제</button></a>
+</div>
+</c:if>
 <div>제목 : ${requestScope.vo.title}</div>
-<div>글번호 : ${param.iboard}</div>
+<div>글번호 : ${param.iboard} <i id="favIcon" class="far fa-heart"></i></div>
 <div>작성자 : ${requestScope.vo.writerNm} | 작성일 : ${requestScope.vo.regdt}</div>
 <div><c:out value="${requestScope.vo.ctnt}"/></div>
 <!-- 원칙적으로 c:out으로 다 해주는게 맞음 (보안 때문에) -->
 <!-- vo 대신에 boardDomain 으로 받아도 된다. -->
 
-<div>
-  <a href="/board/delete?iboard=${param.iboard}"><button>삭제</button></a>
-  <a href="/board/mod?iboard=${param.iboard}"><button>수정</button></a>
-</div>
 <c:if test="${not empty sessionScope.loginUser}">
   <div>			   <!-- onsubmit="return false" : submit눌렀을 때 서블렛으로 안가도록 /Ajax실행해야하기 때문에(String만 가져와야해서) -->
     <form id="cmtFrm" onsubmit="return false;">

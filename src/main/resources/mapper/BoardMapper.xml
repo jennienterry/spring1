@@ -3,6 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jimin.spring.board.BoardMapper">
     <insert id="insBoard" useGeneratedKeys="true" keyProperty="iboard" >
+<!-- useGenerateKeys, keyProperty 적으면 글쓰기 하고 insert한 iboard의 값을 batis가 바로 가져옴-->
         INSERT INTO t_board
         (title, ctnt, iuser)
         VALUES
@@ -25,5 +26,17 @@
     WHERE iboard = #{iboard};
     </select>
 
+    <update id="updBoard">
+    UPDATE t_board
+    SET title=#{title}, ctnt=#{ctnt}
+    WHERE iboard=#{iboard}
+    AND iuser= #{iuser}
+    </update>
+
+    <delete id="delBoard">
+    DELETE FROM t_board
+    WHERE iboard=#{iboard}
+    AND iuser=#{iuser}
+    </delete>
 
 </mapper>

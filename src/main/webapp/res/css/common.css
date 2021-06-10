@@ -31,3 +31,6 @@ section{
  * visibility: hidden; 안보이지만 공간은 차지함
  * important가 우선순위 제일 높음
  */
+
+.fas, .far {color:#e74c3c;}
+.pointer{cursor:pointer;}

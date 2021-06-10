@@ -27,7 +27,12 @@
 
     <delete id="delBoardCmt" >
     DELETE FROM t_board_cmt
-    WHERE icmt= #{icmt}
-    AND iuser= #{iuser} /* 글쓴이만 삭제가 가능하도록 */
+    WHERE
+      <if test="iboard > 0">
+        iboard = #{iboard}
+      </if>
+      <if test="icmt > 0">
+        icmt= #{icmt} AND iuser= #{iuser} /* 글쓴이만 삭제가 가능하도록 / 댓글 여러개 삭제가능 */
+      </if>
     </delete>
 </mapper>

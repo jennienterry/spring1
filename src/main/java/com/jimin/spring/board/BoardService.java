@@ -1,23 +1,24 @@
 package com.jimin.spring.board;
 
-import com.jimin.spring.user.UserEntity;
+import com.jimin.spring.MyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
 public class BoardService {
 
     @Autowired
-    private BoardMapper mapper;
+    private BoardMapper mapper; //객체화가 된 애의 주소값을 가져온다.
 
     @Autowired
     private BoardCmtMapper cmtMapper;
 
     @Autowired
-    private HttpSession session;
+    private MyUtils myUtils;
+//    @Autowired
+//    private HttpSession session; MyUtils에서 만들어줬음
 
     public List<BoardDomain> selBoardList(){ return mapper.selBoardList(); }
 
@@ -27,17 +28,30 @@ public class BoardService {
 
     //return 값은 iboard값
     public int writeMod(BoardEntity param) { //BoardEntity아니면 object (= 부모타입은 자식객체 가리킬 수 있지만 자식은 부모객체x)
-        if(param.getIboard() == 0){
-            //등록
-            return 0;
+//      UserEntity loginUser = (UserEntity) session.getAttribute("loginUser");
+//      param.setIuser(loginUser.getIuser());
+        param.setIuser(myUtils.getLoginUserPk());
+        if(param.getIboard() == 0) { //등록
+            mapper.insBoard(param);
+        }else { //수정
+            mapper.updBoard(param);
+        }
+        return param.getIboard();
+        //boardMapper.xml 에서 useGeneratedKeys="true" keyProperty="iboard"해줘서 이렇게 값을 가져올 수 있음
     }
-        //수정
-        return mapper.writeMod(param);
+
+    public int delBoard(BoardEntity param){
+        //댓글 먼저 삭제한다.
+        BoardCmtEntity cmtParam = new BoardCmtEntity();
+        cmtParam.setIboard(param.getIboard());
+        cmtMapper.delBoardCmt(cmtParam);
+
+        param.setIuser(myUtils.getLoginUserPk());
+        return mapper.delBoard(param);
     }
 
     public int insBoardCmt(BoardCmtEntity param) {
-        UserEntity loginUser = (UserEntity) session.getAttribute("loginUser");
-        param.setIuser(loginUser.getIuser());
+        param.setIuser(myUtils.getLoginUserPk());
         return cmtMapper.insBoardCmt(param);}
 
     public List<BoardCmtDomain> selBoardCmtList(BoardCmtEntity param){
@@ -45,12 +59,11 @@ public class BoardService {
     }
 
     public int updBoardCmt(BoardCmtEntity param) {
-        UserEntity loginUser = (UserEntity) session.getAttribute("loginUser");
-        param.setIuser(loginUser.getIuser());
+        param.setIuser(myUtils.getLoginUserPk());
         return cmtMapper.updBoardCmt(param);
     }
     public int delBoardCmt(BoardCmtEntity param){
-        UserEntity loginUser = (UserEntity) session.getAttribute("loginUser");
-        param.setIuser(loginUser.getIuser());
-        return cmtMapper.delBoardCmt(param); }
+        param.setIuser(myUtils.getLoginUserPk());
+        return cmtMapper.delBoardCmt(param);
+    }
 }

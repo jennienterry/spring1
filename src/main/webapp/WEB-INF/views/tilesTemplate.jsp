@@ -10,9 +10,11 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <html>
 <head>
-    <title>${requestScope.title}</title>
+    <title><tiles:getAsString name="title"/></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="/res/css/common.css">
     <link rel="stylesheet" href="/res/css/<tiles:getAsString name="res"/>.css">
+
     <!-- 이 위치에, 이름이 "res"인 put-attribute를 String으로 가져와라 (tiles.xml확인하기) -->
     <script defer src="/res/js/common.js"></script>
     <script defer src="/res/js/<tiles:getAsString name="res"/>.js"></script>

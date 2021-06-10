@@ -36,14 +36,24 @@ public class BoardController {
     }
 
     @RequestMapping("/writeMod")
-    public void writeMod(){}
+    public void writeMod(BoardDTO param, Model model){
+        System.out.println("param = " + param);
+        if(param.getIboard()>0){
+            model.addAttribute("data", service.selBoard(param));
+        }
+    }
 
     @PostMapping("/writeMod")
-    public String writeMod(BoardEntity param){
+    public String writeModProc(BoardEntity param){
         int iboard = service.writeMod(param);
         return "redirect:detail?iboard=" + iboard;
     }
 
+    @GetMapping("/delBoard")
+    public String delBoard(BoardEntity param){
+        int iboard = service.delBoard(param);
+        return "redirect:/board/list";
+    }
 
     @ResponseBody
     //이걸 달면 목적이 달라진다. jsp를 여는게 아니라 return 값을 json 으로 바꾸려고 한다. (data주는게 목적)
