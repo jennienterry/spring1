@@ -19,7 +19,11 @@
 </div>
 </c:if>
 <div>제목 : ${requestScope.vo.title}</div>
-<div>글번호 : ${param.iboard} <i id="favIcon" class="far fa-heart"></i></div>
+<div>글번호 : ${param.iboard}
+  <c:if test="${not empty sessionScope.loginUser}">
+  <i id="favIcon" class="far fa-heart"></i>
+  </c:if>
+</div>
 <div>작성자 : ${requestScope.vo.writerNm} | 작성일 : ${requestScope.vo.regdt}</div>
 <div><c:out value="${requestScope.vo.ctnt}"/></div>
 <!-- 원칙적으로 c:out으로 다 해주는게 맞음 (보안 때문에) -->

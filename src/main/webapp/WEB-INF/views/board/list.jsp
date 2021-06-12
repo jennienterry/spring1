@@ -7,7 +7,23 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<div>
+    <form action="list" id="frm">
+        <input type="hidden" name="page" value="${param.page == null ? 1 : param.page}"> <!-- onchange="getList();"-->
+            <select name="recordCnt">
+                <c:forEach begin="5" end="20" step="5" var="cnt">
+                    <c:choose>
+                        <c:when test="${cnt eq param.recordCnt}">
+                            <option selected>${cnt}</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option>${cnt}</option>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+        </select>
+    </form>
+</div>
 
 <h1>리스트</h1>
 <table>
@@ -29,6 +45,10 @@
                     ${item.title}
                 </c:otherwise>
             </c:choose>
+            <!-- 좋아요 -->
+            <c:if test="${not empty sessionScope.loginUser && item.isFav eq 1}">
+                <i class="fas fa-heart"></i>
+            </c:if>
         </td>
 
         <c:choose>
@@ -54,3 +74,18 @@
     </tr>
     </c:forEach>
 </table>
+<div>
+<c:forEach var="i" begin="1" end="${requestScope.maxPageVal}">
+    <c:choose>
+        <c:when test="${(empty param.page && i eq 1) || param.page eq i}">
+            <span class="selected">${i}</span>
+        </c:when>
+        <c:otherwise>
+    <span><a href="list?page=${i}&recordCnt=${param.recordCnt}">${i}</a></span>
+        </c:otherwise>
+    </c:choose>
+</c:forEach>
+</div>
+
+<!-- items : 자료 하나씩 넣어가면서 실행 (list나 배열을 받았을 때)
+     begin, end : begin에서 end까지 step만큼 [값 안주면 기본 1, 숫자 주는만큼] 건너뛴다 -->

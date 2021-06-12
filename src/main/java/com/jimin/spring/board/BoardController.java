@@ -21,9 +21,9 @@ public class BoardController {
     private BoardService service;
 
     @RequestMapping("/list") //RequestMapping만 있으면 jsp파일 열어주는 것
-    public String list(Model model) {
-        List<BoardDomain> list = service.selBoardList();
-        model.addAttribute("list", list);
+    public String list(BoardDTO param, Model model) {
+        model.addAttribute("list", service.selBoardList(param));
+        model.addAttribute("maxPageVal", service.selMaxPageVal(param));
         return "board/list";
     }
 
@@ -105,4 +105,9 @@ public class BoardController {
 //      return data; 하고 js에는 data.result로 해줘야한다.
         return service.delBoardCmt(param);
     }
-}
+
+    @GetMapping("/favList") //화면만 뿌림 list뿌리는것은 js에서 Ajax로 / Model model 안함
+        public String favList(){
+            return "board/favList";
+        }
+    }

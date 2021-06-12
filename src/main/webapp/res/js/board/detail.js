@@ -249,7 +249,7 @@ function delFavAjax(){
 
 //좋아요 여부 값 가져오기
 function getFavAjax() {
-	fetch('fav?iboard=' + cmtListElem.dataset.iboard)
+	fetch('fav/' + cmtListElem.dataset.iboard)
 		.then(function (res) {
 			return res.json();
 		})

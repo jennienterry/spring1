@@ -10,12 +10,31 @@
         (#{title}, #{ctnt}, #{iuser})
     </insert>
 
+    <select id="selMaxPageVal" resultType="_int">
+    SELECT CEIL(count(iboard)/#{recordCnt}) FROM t_board
+    </select>
+
     <select id="selBoardList" resultType="BoardDomain">
     SELECT A.iboard, A.title, A.iuser, A.regdt, B.unm AS writerNm, B.profileImg
+           ,CASE WHEN C.iboard IS NULL <!-- iboard가 null이라면 0, 아니면 1 -->
+                 THEN 0
+                 ELSE 1
+            END AS isFav
     FROM t_board A
-    LEFT JOIN t_user B
+    INNER JOIN t_user B
     ON A.iuser = B.iuser
-    ORDER BY A.iboard DESC;
+        <if test="selType eq 0">
+            LEFT JOIN t_board_fav C <!-- 좋아요 한것만 볼 수 있도록 -->
+        </if>
+        <if test="selType eq 1">
+            INNER JOIN t_board_fav C
+        </if>
+    ON A.iboard = C.iboard
+    AND C.iuser = #{iuser}
+    ORDER BY A.iboard DESC
+    <if test="recordCnt > 0">
+    LIMIT #{startIdx}, #{recordCnt};
+    </if>
     </select>
 
     <select id="selBoard" resultType="BoardDomain">

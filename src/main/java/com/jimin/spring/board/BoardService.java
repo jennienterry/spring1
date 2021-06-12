@@ -20,12 +20,21 @@ public class BoardService {
 //    @Autowired
 //    private HttpSession session; MyUtils에서 만들어줬음
 
-    public List<BoardDomain> selBoardList(){ return mapper.selBoardList(); }
+    public int selMaxPageVal(BoardDTO param){
+        return mapper.selMaxPageVal(param);
+    }
+
+    public List<BoardDomain> selBoardList(BoardDTO param){
+        param.setIuser(myUtils.getLoginUserPk());
+        int startIdx = (param.getPage() - 1) * param.getRecordCnt();
+        param.setStartIdx(startIdx);
+        return mapper.selBoardList(param);
+    }
+
 
     public BoardDomain selBoard(BoardDTO param){
         return mapper.selBoard(param);
     }
-
     //return 값은 iboard값
     public int writeMod(BoardEntity param) { //BoardEntity아니면 object (= 부모타입은 자식객체 가리킬 수 있지만 자식은 부모객체x)
 //      UserEntity loginUser = (UserEntity) session.getAttribute("loginUser");
