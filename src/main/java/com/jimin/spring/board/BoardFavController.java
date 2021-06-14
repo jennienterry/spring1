@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
     @RestController //Controller 메소드들의 jsp파일 return이 아니라 json을 return하는게 목적이 된다.
@@ -27,12 +26,20 @@ import java.util.Map;
         return result;
     }
 
-    // 좋아요 리스트
-    @GetMapping("/fav")
-    public List<BoardDomain> selFavBoardList(BoardDTO param){
-        param.setSelType(1);
-        return BoardService.selBoardList(param);
-    }
+//    public List<BoardDomain> selFavBoardList(BoardDTO param){
+//        param.setSelType(1);
+//        return BoardService.selBoardList(param);
+//    }
+
+        // 좋아요 리스트
+        @GetMapping("/fav")
+        public Map<String, Object> selFavBoardList(BoardDTO param) {
+            Map<String, Object> result = new HashMap();
+            param.setSelType(1);
+            result.put("list", BoardService.selBoardList(param));
+            result.put("maxPageVal", BoardService.selMaxPageVal(param));
+            return result;
+        }
 
     @GetMapping("/fav/{iboard}")
     public Map<String, Integer> selFav(BoardFavEntity param, @PathVariable int iboard) {
@@ -48,5 +55,4 @@ import java.util.Map;
         result.put("result", service.delFav(param));
         return result;
     }
-
 }

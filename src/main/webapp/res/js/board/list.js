@@ -2,7 +2,8 @@ const frmElem = document.querySelector('#frm')
 const selectElem = frmElem.recordCnt;
 
 selectElem.addEventListener('change', function(){
-console.log(selectElem.value);
+	frmElem.page.value = 1;
+	frmElem.submit();
 });
 
 function moveToDetail(iboard){

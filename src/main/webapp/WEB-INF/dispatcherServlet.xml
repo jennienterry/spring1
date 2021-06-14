@@ -26,6 +26,17 @@
     <!-- /res나 /img의 경우에는 servlet이 잡지않도록 경로를 /res/와 c:/Users .. 로 지정해준 것 -->
 
 
+    <mvc:interceptors>
+        <mvc:interceptor> <!-- 모든 interceptor를 거치겠다 라는 의미 -->
+            <mvc:mapping path="/**"/>
+<!--            <mvc:mapping path="/board/writeMod"/>-->
+<!--            <mvc:mapping path="/board/favList"/>-->
+<!--            <mvc:mapping path="/user/profile"/>-->
+            <bean class="com.jimin.spring.AuthCheckInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+
     <!-- 사용할 파일명을 완성해주는 객체 / open jsp 역할 -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!-- InternalResourceViewResolver : web application의 war파일 내에 포함된 view template(jsp)을 찾아서 열어줌,

@@ -11,7 +11,12 @@
     </insert>
 
     <select id="selMaxPageVal" resultType="_int">
-    SELECT CEIL(count(iboard)/#{recordCnt}) FROM t_board
+    SELECT CEIL(count(A.iboard)/#{recordCnt}) FROM t_board A
+    <if test="selType eq 1">
+        INNER JOIN t_board_fav C
+        ON A.iboard = C.iboard
+        AND C.iuser = #{iuser}
+    </if>
     </select>
 
     <select id="selBoardList" resultType="BoardDomain">
@@ -24,10 +29,10 @@
     INNER JOIN t_user B
     ON A.iuser = B.iuser
         <if test="selType eq 0">
-            LEFT JOIN t_board_fav C <!-- 좋아요 한것만 볼 수 있도록 -->
+            LEFT JOIN t_board_fav C
         </if>
         <if test="selType eq 1">
-            INNER JOIN t_board_fav C
+            INNER JOIN t_board_fav C <!-- 좋아요 한것만 볼 수 있도록 -->
         </if>
     ON A.iboard = C.iboard
     AND C.iuser = #{iuser}

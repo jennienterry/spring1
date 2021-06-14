@@ -8,9 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div>
-    <form action="list" id="frm">
-        <input type="hidden" name="page" value="${param.page == null ? 1 : param.page}"> <!-- onchange="getList();"-->
-            <select name="recordCnt">
+    <form action="list" id="frm"> <!-- method생략하면 get방식 -->
+        <input type="hidden" name="page" value="${param.page == null ? 1 : param.page}">
+            <select name="recordCnt"> <!-- onchange="getList();" / js에서 change 적었을 때 사용하는 건데 안적어도됨-->
                 <c:forEach begin="5" end="20" step="5" var="cnt">
                     <c:choose>
                         <c:when test="${cnt eq param.recordCnt}">
@@ -81,7 +81,7 @@
             <span class="selected">${i}</span>
         </c:when>
         <c:otherwise>
-    <span><a href="list?page=${i}&recordCnt=${param.recordCnt}">${i}</a></span>
+    <span><a href="list?page=${i}&recordCnt=${requestScope.cPage.recordCnt}">${i}</a></span>
         </c:otherwise>
     </c:choose>
 </c:forEach>

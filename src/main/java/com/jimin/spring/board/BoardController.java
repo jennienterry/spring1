@@ -24,6 +24,8 @@ public class BoardController {
     public String list(BoardDTO param, Model model) {
         model.addAttribute("list", service.selBoardList(param));
         model.addAttribute("maxPageVal", service.selMaxPageVal(param));
+        model.addAttribute("cPage",param);
+        // 페이징에서 처음 리스트 들어갔을 때, 받은 값이 없어서 2페이지로 넘어가지 않는다. 그것을 해결하기 위해 param값을 주는 것
         return "board/list";
     }
 

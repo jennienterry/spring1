@@ -1,11 +1,13 @@
 const listElem = document.querySelector('#list');
+const pagingElem = document.querySelector('#paging');
 
-function getListAjax(){
-    fetch('fav')
+function getListAjax(page = 1){
+    fetch('fav?page=' + page)
         .then(res => res.json()) // => 는 return 적은 것과 같은 효과가 난다.
         .then(myJson => {
             console.log(myJson);
-            makeView(myJson);
+            makeView(myJson.list);
+            makePaging(myJson.maxPageVal,page);
         });
 }
 // 위와 같은데 모든 브라우저 가능, 위는 최신버전만 가능
@@ -17,6 +19,25 @@ function getListAjax(){
 //         console.log(myJson);
 //     });
 
+//페이징 view 만들기
+function makePaging(maxPageVal, selectedPage){
+    pagingElem.innerHTML='';
+    for(let i=1; i<=maxPageVal; i++){
+        const span = document.createElement('span');
+        if(selectedPage == i){
+            span.classList.add('selected');
+        }else {
+            span.classList.add('pointer')
+            span.addEventListener('click', function () {
+                getListAjax(i);
+            });
+        }
+        span.innerText = i;
+        pagingElem.append(span);
+    }
+}
+
+//리스트 view 만들기
 function makeView(data){
     listElem.innerHTML=''; //값 있으면 지워줘
 

@@ -2,5 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <h1>좋아요</h1>
 <div id="list"></div>
+<div id="paging"></div>
 
 
